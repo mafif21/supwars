@@ -37,6 +37,9 @@
                         Name
                     </th>
                     <th scope="col" class="px-6 py-3">
+                        Harga
+                    </th>
+                    <th scope="col" class="px-6 py-3">
                         Categories
                     </th>
                     <th scope="col" class="px-6 py-3">
@@ -58,6 +61,9 @@
                         </th>
                         <th scope="row" class="px-6 py-4 font-semibold text-darker-black whitespace-nowrap">
                             {{ $weapon->name }}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-semibold text-darker-black whitespace-nowrap">
+                            {{ $weapon->price }}
                         </th>
                         <td class="px-6 py-4">
                             <div class="flex justify-center flex-wrap w-[100px] gap-y-3">

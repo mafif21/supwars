@@ -31,12 +31,14 @@
                                     Tersedia</span>
                             @endif
                         </div>
-                        <button data-modal-target="peminjaman-{{ $weapon->id }}"
-                            data-modal-toggle="peminjaman-{{ $weapon->id }}" data-aset="{{ $weapon->id }}"
-                            class="pinjamBtn block text-white mt-6 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center w-full"
-                            type="button">
-                            Pinjam
-                        </button>
+                        @if ($weapon->available == 1)
+                            <button data-modal-target="peminjaman-{{ $weapon->id }}"
+                                data-modal-toggle="peminjaman-{{ $weapon->id }}" data-aset="{{ $weapon->id }}"
+                                class="pinjamBtn block text-white mt-6 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center w-full"
+                                type="button">
+                                Pinjam
+                            </button>
+                        @endif
 
                         <div id="peminjaman-{{ $weapon->id }}" tabindex="-1" aria-hidden="true"
                             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -62,7 +64,7 @@
                                                 <label for="date"
                                                     class="block mb-2 text-sm font-semibold text-left">Tanggal
                                                     Peminjaman</label>
-                                                <input type="date" id="date"
+                                                <input type="date" id="datepicker" min="{{ now()->format('Y-m-d') }}"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-4 p-2.5 date_picker awal"
                                                     min="current_date" placeholder="Pilih tanggal Pengajuan" required
                                                     name="tanggal_peminjaman">
@@ -212,9 +214,6 @@
 
         </div>
     </div>
-
-
-
 
 
 </x-app-layout>

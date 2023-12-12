@@ -19,6 +19,12 @@
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
             <div>
+                <label for="price" class="block mb-2 text-sm font-semibold">Harga *</label>
+                <input type="number" id="price" class="border border-line-stroke text-sm rounded block w-full p-2"
+                    placeholder="Weapon price" name="price" value="{{ old('price') }}">
+                <x-input-error :messages="$errors->get('price')" class="mt-2" />
+            </div>
+            <div>
                 <label for="name" class="block mb-2 text-sm font-semibold">Categories *</label>
                 <ul
                     class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">

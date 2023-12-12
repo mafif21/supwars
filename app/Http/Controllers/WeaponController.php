@@ -36,6 +36,7 @@ class WeaponController extends Controller
         $data = [
             "kode" => $request->kode,
             "name" => $request->name,
+            "price" => $request->price,
             "image" => $request->image,
             "description" => $request->description,
         ];
@@ -69,6 +70,7 @@ class WeaponController extends Controller
         $request->validate([
             'kode' => 'required',
             'name' => 'required',
+            'price' => 'required',
             'description' => 'required',
             'image' => 'image|mimes:jpg,jpeg,png,svg',
         ]);
@@ -82,6 +84,7 @@ class WeaponController extends Controller
         $weapon->update([
             "kode" => $request->kode,
             "name" => $request->name,
+            "price" => $request->price,
             "description" => $request->description,
             "image" => $image,
         ]);

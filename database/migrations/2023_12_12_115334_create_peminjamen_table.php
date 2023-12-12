@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('peminjamen', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('restrict');
-            $table->foreignId('weapon_id')->nullable()->constrained()->onDelete('restrict');
+            $table->foreignId('user_id')->constrained()->onDelete('restrict');
+            $table->foreignId('weapon_id')->constrained()->onDelete('restrict');
             $table->date('tanggal_peminjaman');
             $table->date('tanggal_dikembalikan')->nullable();
             $table->timestamps();

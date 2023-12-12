@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Peminjaman;
+use App\Models\Weapon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PeminjamanController extends Controller
 {
@@ -12,7 +14,8 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $peminjamans = Peminjaman::all();
+        return view('user.peminjaman.index', compact('peminjamans'));
     }
 
     /**
@@ -28,8 +31,40 @@ class PeminjamanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            // Validasi input
+            $validator = Validator::make($request->all(), [
+                'weapon_id' => 'required',
+                'tanggal_peminjaman' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()->with('danger', 'Data tidak valid');
+            }
+
+            // Periksa apakah pengguna sudah meminjam 2 senjata
+            $userWeaponCount = Peminjaman::where('user_id', auth()->user()->id)
+                ->count();
+
+            if ($userWeaponCount >= 2) {
+                return redirect()->back()->with('danger', 'Anda sudah mencapai batas maksimal peminjaman senjata.');
+            }
+
+            Peminjaman::create([
+                'weapon_id' => $request->weapon_id,
+                'tanggal_peminjaman' => $request->tanggal_peminjaman,
+            ]);
+
+            Weapon::where('id', $request->weapon_id)->update([
+                'available' => false
+            ]);
+
+            return redirect()->back()->with('success', 'Data berhasil disimpan.');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('danger', 'Terjadi kesalahan saat menyimpan data.');
+        }
     }
+
 
     /**
      * Display the specified resource.
