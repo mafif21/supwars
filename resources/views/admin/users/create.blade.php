@@ -61,14 +61,6 @@
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
                     <div class="mb-6">
-                        <label for="image"
-                            class="block mb-2 text-sm font-medium text-gray-900 font-semibold">Image</label>
-                        <input
-                            class="block w-full text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
-                            id="small_size" type="file" name="image">
-                        <x-input-error :messages="$errors->get('image')" class="mt-2" />
-                    </div>
-                    <div class="mb-6">
                         <label for="image" class="block mb-2 text-sm font-medium text-gray-900 font-semibold">Is
                             Admin ?</label>
 

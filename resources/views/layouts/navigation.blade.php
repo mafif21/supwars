@@ -48,9 +48,13 @@
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
-                        <x-dropdown-link :href="route('admin.index')">
-                            {{ __('Admin') }}
-                        </x-dropdown-link>
+                        @isset(auth()->user()->is_admin)
+                            @if (auth()->user()->is_admin)
+                                <x-dropdown-link :href="route('admin.index')">
+                                    {{ __('Admin') }}
+                                </x-dropdown-link>
+                            @endif
+                        @endisset
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">

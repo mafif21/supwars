@@ -30,12 +30,12 @@
                                     {{ date('Y-m-d', strtotime($peminjaman->tanggal_peminjaman)) }}
                                 </h5>
                             </div>
-                            @if ($peminjaman->weapons->available == 1)
+                            @if ($peminjaman->tanggal_dikembalikan !== null)
                                 <span
                                     class="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded">Tersedia</span>
                             @else
-                                <span class="bg-red-100 text-red-800 text-sm font-medium px-2.5 py-0.5 rounded">Tidak
-                                    Tersedia</span>
+                                <span class="bg-red-100 text-red-800 text-sm font-medium px-2.5 py-0.5 rounded">Belum
+                                    Dikembalikan</span>
                             @endif
                         </div>
                         @if ($peminjaman->weapons->available == 1)

@@ -4,7 +4,7 @@
     <div class="grid lg:grid-cols-[3fr_1fr] text-darker-black gap-x-4">
         <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-2 h-fit ">
             @foreach ($weapons as $weapon)
-                <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow " id="target">
+                <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow card" id="target">
                     <div class="relative">
                         <div>
                             <a href="#">
@@ -15,14 +15,21 @@
                         <div class="absolute inset-0 p-2">
                             @foreach ($weapon->categories as $category)
                                 <span
-                                    class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">{{ $category->name }}</span>
+                                    class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
+                                    id="card-name">{{ $category->name }}</span>
                             @endforeach
                         </div>
                     </div>
                     <div class="p-5">
                         <div class="text-sm font-semibold"></div>
                         <div class="flex lg:flex-col justify-between items-center lg:items-start w-full">
-                            <h5 class="mb-2 text-xl font-bold tracking-tight" id="nama_barang">{{ $weapon->name }}</h5>
+                            <div class="flex w-full justify-between">
+                                <h5 class="mb-2 text-xl font-bold tracking-tight" id="nama_barang">{{ $weapon->name }}
+                                </h5>
+                                <h5 class="mb-2 text-sm font-bold tracking-tight" id="nama_barang">
+                                    Rp.{{ $weapon->price }}
+                                </h5>
+                            </div>
                             @if ($weapon->available == 1)
                                 <span
                                     class="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded">Tersedia</span>
@@ -64,7 +71,8 @@
                                                 <label for="date"
                                                     class="block mb-2 text-sm font-semibold text-left">Tanggal
                                                     Peminjaman</label>
-                                                <input type="date" id="datepicker" min="{{ now()->format('Y-m-d') }}"
+                                                <input type="date" id="datepicker"
+                                                    min="{{ now()->format('Y-m-d') }}"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-4 p-2.5 date_picker awal"
                                                     min="current_date" placeholder="Pilih tanggal Pengajuan" required
                                                     name="tanggal_peminjaman">
@@ -112,7 +120,8 @@
                                 <form class="space-y-6" action="" method="post">
                                     @csrf
                                     <div>
-                                        <label for="date" class="block mb-2 text-sm font-semibold text-left">Tanggal
+                                        <label for="date"
+                                            class="block mb-2 text-sm font-semibold text-left">Tanggal
                                             Pengajuan</label>
                                         <input type="date" id="date"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-4 p-2.5 date_picker awal"
@@ -163,30 +172,34 @@
                                     stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
-                        <input type="search" id="pencarian"
+                        <input type="search" id="menu-search"
                             class="block w-full p-2 pl-10 text-sm  border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Cari aset..." required>
                     </div>
                     <div class="rounded-b-md pb-3 px-4 bg-white">
-                        <form action="" method="GET">
+                        <form action="{{ route('dashboard') }}" method="GET">
                             @csrf
                             <div class="border-b py-4">
                                 <h4 class="font-semibold text-xs mb-2.5">Status</h4>
 
                                 <div class="flex flex-col gap-y-3">
                                     <div class="flex items-center">
-                                        <input id="default-checkbox" type="checkbox" value="Tersedia"
-                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded" name="check">
-                                        <label for="default-checkbox"
-                                            class="ml-2 text-xs font-medium">Tersedia</label>
+                                        <input id="default-radio-1" type="radio" value="1"
+                                            name="availability"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-1"
+                                            class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300">Tersedia</label>
                                     </div>
                                     <div class="flex items-center">
-                                        <input id="default-checkbox" type="checkbox" value="Tidak Tersedia"
-                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded" name="check">
-                                        <label for="default-checkbox" class="ml-2 text-xs font-medium">Tidak
+                                        <input id="default-radio-2" type="radio" value="0"
+                                            name="availability"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-radio-2"
+                                            class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300">Tidak
                                             Tersedia</label>
                                     </div>
                                 </div>
+
                             </div>
                             <div class="border-b py-4">
                                 <h4 class="font-semibold text-xs mb-2.5">Kategori</h4>

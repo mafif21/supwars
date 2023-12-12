@@ -1,14 +1,15 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\WeaponController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PengajuanController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\WeaponController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PeminjamanController;
 
 
 Route::middleware(['auth', 'verified'])->group(function () {

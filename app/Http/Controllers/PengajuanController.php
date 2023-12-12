@@ -11,9 +11,18 @@ class PengajuanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $peminjaman = Peminjaman::paginate(10);
+        $peminjaman = Peminjaman::query();
+
+        if ($request->input('query')) {
+            $queryValue = $request->input('query');
+            $peminjaman->whereHas('users', function ($query) use ($queryValue) {
+                $query->where('username', 'LIKE', "%$queryValue%");
+            });
+        }
+
+        $peminjaman = $peminjaman->paginate(10);
         return view('admin.peminjaman.index', compact('peminjaman'));
     }
 
@@ -25,7 +34,8 @@ class PengajuanController extends Controller
             $denda = 50000;
 
             // Calculate the duration in days
-            $durasi = \Carbon\Carbon::parse($peminjaman->tanggal_peminjaman)->diffInDays(now());
+            $durasi = \Carbon\Carbon::parse($peminjaman->tanggal_peminjaman)->diffInDays(now()) + 1;
+            // dd($durasi);
 
             if ($durasi > 5) {
                 $totalPrice = ($pricePerDay * $durasi) + $denda;

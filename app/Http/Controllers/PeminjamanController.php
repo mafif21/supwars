@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Peminjaman;
 use App\Models\Weapon;
+use App\Models\Peminjaman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class PeminjamanController extends Controller
@@ -14,7 +15,8 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        $peminjamans = Peminjaman::all();
+        $peminjamans = Peminjaman::where('user_id', '=', Auth::id())->where('tanggal_dikembalikan', '=', null)->get();
+        // ddd($peminjamans);
         return view('user.peminjaman.index', compact('peminjamans'));
     }
 

@@ -91,6 +91,17 @@
 
         <main class="m-2 p-8 w-full">
             <x-container>
+                <div class="mb-5">
+                    @if (session()->has('success'))
+                        <x-success-alert statusText="{{ session()->get('success') }}"></x-success-alert>
+                    @endif
+                    @if (session()->has('edit'))
+                        <x-primary-alert statusText="{{ session()->get('edit') }}"></x-primary-alert>
+                    @endif
+                    @if (session()->has('delete'))
+                        <x-danger-alert statusText="{{ session()->get('delete') }}"></x-danger-alert>
+                    @endif
+                </div>
                 <div>
                     {{ $slot }}
                 </div>

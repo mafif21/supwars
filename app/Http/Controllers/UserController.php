@@ -44,14 +44,9 @@ class UserController extends Controller
             'age' => 'required|integer|min:18',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string',
-            'image' => 'nullable|image',
             'job' => "required",
             'is_admin' => 'required'
         ]);
-
-        if ($request->file('image')) {
-            $request->file('image')->store('uploads', 'public');
-        }
 
         User::create([
             'username' => $validatedData['username'],
@@ -59,7 +54,6 @@ class UserController extends Controller
             'age' => $validatedData['age'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
-            'image' => $validatedData['image'] ?? null,
             'is_admin' => $validatedData['is_admin'],
             'job' => $validatedData['job'],
         ]);
@@ -83,11 +77,9 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'username' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z0-9_]+$/'],
             'age' => ['required', 'integer', 'min:18'],
-            'job' => ['required', 'string', 'email', 'max:255'],
+            'job' => ['required', 'string'],
             'nickname' => ['required', 'string', 'max:255'],
             'email' => ['nullable', 'string', 'email', 'max:255'],
-            'password' => ['nullable', 'string', 'min:8'],
-            'image' => ['nullable', 'image', 'max:2048'],
             'oldPass' => ['required_with:newPassword', 'string', 'min:8'],
             'newPassword' => ['nullable', 'string', 'min:8', 'different:oldPass'],
         ]);
