@@ -43,8 +43,8 @@
                 <x-admin-nav-link :href="route('admin.user.index')" :active="request()->routeIs('admin.user**')">
                     {{ __('Users') }}
                 </x-admin-nav-link>
-                <x-admin-nav-link :href="route('admin.index')" :active="request()->routeIs('admin')">
-                    {{ __('Weapons') }}
+                <x-admin-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories**')">
+                    {{ __('Categories') }}
                 </x-admin-nav-link>
                 <x-admin-nav-link :href="route('admin.index')" :active="request()->routeIs('admin')">
                     {{ __('Category') }}

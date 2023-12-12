@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,9 @@ Route::middleware('admin')->name('admin.')->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
 
     Route::resource('/user', UserController::class);
+    Route::resource('/categories', CategoryController::class);
+
+    Route::get('/kategori/checkslug', [CategoryController::class, 'checkSlug']);
 });
 
 require __DIR__ . '/auth.php';
