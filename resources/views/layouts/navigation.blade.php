@@ -6,7 +6,11 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                        <h1
+                            class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200 flex items-center font-semibold text-xl">
+                            Supwars</h1>
+
+
                     </a>
                 </div>
 
