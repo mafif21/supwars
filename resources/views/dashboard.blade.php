@@ -5,10 +5,20 @@
         <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-2 h-fit ">
             @foreach ($weapons as $weapon)
                 <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow " id="target">
-                    <a href="#">
-                        <img class="rounded-t-lg h-52 w-full object-cover" src="{{ asset('storage/' . $weapon->image) }}"
-                            alt="card-img" />
-                    </a>
+                    <div class="relative">
+                        <div>
+                            <a href="#">
+                                <img class="rounded-t-lg h-52 w-full object-cover"
+                                    src="{{ asset('storage/' . $weapon->image) }}" alt="card-img" />
+                            </a>
+                        </div>
+                        <div class="absolute inset-0 p-2">
+                            @foreach ($weapon->categories as $category)
+                                <span
+                                    class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">{{ $category->name }}</span>
+                            @endforeach
+                        </div>
+                    </div>
                     <div class="p-5">
                         <div class="text-sm font-semibold"></div>
                         <div class="flex lg:flex-col justify-between items-center lg:items-start w-full">
@@ -21,20 +31,20 @@
                                     Tersedia</span>
                             @endif
                         </div>
-                        <button data-modal-target="authentication-modal-" data-modal-toggle="authentication-modal-"
-                            data-aset=""
+                        <button data-modal-target="peminjaman-{{ $weapon->id }}"
+                            data-modal-toggle="peminjaman-{{ $weapon->id }}" data-aset="{{ $weapon->id }}"
                             class="pinjamBtn block text-white mt-6 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center w-full"
                             type="button">
                             Pinjam
                         </button>
 
-                        <div id="authentication-modal-" tabindex="-1" aria-hidden="true"
+                        <div id="peminjaman-{{ $weapon->id }}" tabindex="-1" aria-hidden="true"
                             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                             <div class="relative w-full max-w-md max-h-full">
                                 <div class="relative bg-white rounded-lg shadow">
                                     <button type="button"
                                         class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
-                                        data-modal-hide="authentication-modal-">
+                                        data-modal-hide="peminjaman-{{ $weapon->id }}">
                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                             fill="none" viewBox="0 0 14 14">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -46,7 +56,7 @@
                                         <h3 class="mb-4 text-xl font-semibold ">Peminjaman
                                             Senjata
                                         </h3>
-                                        <form class="space-y-6" action="" method="post">
+                                        <form class="space-y-6" action="{{ route('loan.store') }}" method="post">
                                             @csrf
                                             <div>
                                                 <label for="date"
@@ -55,18 +65,9 @@
                                                 <input type="date" id="date"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-4 p-2.5 date_picker awal"
                                                     min="current_date" placeholder="Pilih tanggal Pengajuan" required
-                                                    name="tanggal_pengajuan">
+                                                    name="tanggal_peminjaman">
                                             </div>
-                                            <input type="hidden" name="idBarang" value="">
-
-                                            <div class="flex items-center mb-4">
-                                                <input id="default-checkbox" type="checkbox" required
-                                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                                                <label for="default-checkbox" class="ml-2 text-xs font-medium">Saya
-                                                    bertanggung jawab
-                                                    terhadap peminjaman yang dilakukan.</label>
-                                            </div>
-
+                                            <input type="hidden" name="weapon_id" value="{{ $weapon->id }}">
                                             <button type="submit"
                                                 class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                                 Peminjaman</button>
@@ -75,12 +76,10 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- @endif --}}
                     </div>
                 </div>
             @endforeach
         </div>
-        {{-- @endif --}}
 
         <!-- Grid 2 -->
         <div class="flex flex-col h-fit order-first lg:order-last mb-3 shadow-md border rounded">
@@ -109,7 +108,7 @@
                                 <div id="namaBarangFromScanner" class="text-2xl font-bold">Nama Barang</div>
                                 <div id="kodeBarangFromScanner" class="text-sm font-semibold">Kode Barang</div>
                                 <form class="space-y-6" action="" method="post">
-                                    {{-- @csrf --}}
+                                    @csrf
                                     <div>
                                         <label for="date" class="block mb-2 text-sm font-semibold text-left">Tanggal
                                             Pengajuan</label>
@@ -213,6 +212,9 @@
 
         </div>
     </div>
+
+
+
 
 
 </x-app-layout>
