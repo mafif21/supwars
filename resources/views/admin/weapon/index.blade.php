@@ -60,7 +60,7 @@
                             {{ $weapon->name }}
                         </th>
                         <td class="px-6 py-4">
-                            <div class="flex justify-center bg-red-100 flex-wrap w-[100px]">
+                            <div class="flex justify-center flex-wrap w-[100px] gap-y-3">
                                 @foreach ($weapon->categories as $item)
                                     <span
                                         class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-3 py-2 rounded dark:text-blue-300">{{ $item->name }}</span>
@@ -69,7 +69,8 @@
                         </td>
 
                         <td class="px-6 py-4">
-                            <img src="{{ asset('storage/' . $weapon->photo) }}" alt="category img" class="w-60 rounded">
+                            <img src="{{ asset('storage/' . $weapon->image) }}" alt="category img"
+                                class="w-full h-20 object-cover rounded">
                         </td>
                         <td class="px-6 py-4">
                             {{ Str::limit($weapon->description, 50, '...') }}

@@ -6,7 +6,7 @@
             @foreach ($weapons as $weapon)
                 <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow " id="target">
                     <a href="#">
-                        <img class="rounded-t-lg h-52 w-full object-cover" src="{{ asset('images/dummy.jpeg') }}"
+                        <img class="rounded-t-lg h-52 w-full object-cover" src="{{ asset('storage/' . $weapon->image) }}"
                             alt="card-img" />
                     </a>
                     <div class="p-5">

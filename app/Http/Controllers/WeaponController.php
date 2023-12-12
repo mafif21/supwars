@@ -36,12 +36,12 @@ class WeaponController extends Controller
         $data = [
             "kode" => $request->kode,
             "name" => $request->name,
-            "photo" => $request->image,
+            "image" => $request->image,
             "description" => $request->description,
         ];
 
         if ($request->file('image')) {
-            $data['photo'] = $request->file('image')->store('uploads', 'public');
+            $data['image'] = $request->file('image')->store('uploads', 'public');
         }
 
         $weapon = Weapon::create($data);
@@ -73,17 +73,17 @@ class WeaponController extends Controller
             'image' => 'image|mimes:jpg,jpeg,png,svg',
         ]);
 
-        $photo = $weapon->photo;
+        $image = $weapon->image;
         if ($request->hasFile('image')) {
-            Storage::delete($weapon->photo);
-            $photo = $request->file('image')->store('menus');
+            Storage::delete($weapon->image);
+            $image = $request->file('image')->store('menus');
         }
 
         $weapon->update([
             "kode" => $request->kode,
             "name" => $request->name,
             "description" => $request->description,
-            "photo" => $photo,
+            "image" => $image,
         ]);
 
         $categories = $request->input('category');

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('kode')->unique();
             $table->string('name');
             $table->boolean('available')->default(true);
-            $table->string('photo');
+            $table->string('image');
             $table->string('description');
             $table->timestamps();
         });
