@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WeaponController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', function () {
@@ -21,8 +22,7 @@ Route::middleware('admin')->name('admin.')->prefix('admin')->group(function () {
 
     Route::resource('/user', UserController::class);
     Route::resource('/categories', CategoryController::class);
-
-    Route::get('/kategori/checkslug', [CategoryController::class, 'checkSlug']);
+    Route::resource('/weapon', WeaponController::class);
 });
 
 require __DIR__ . '/auth.php';
