@@ -6,15 +6,22 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $allUsers = User::all();
+        if ($request->input('query')) {
+            $query = $request->input('query');
+            $allUsers = User::where('username', 'LIKE', "%$query%")->paginate(10);
+        } else {
+            $allUsers = User::paginate(10);
+        }
+
         return view('admin.users.index', compact('allUsers'));
     }
 
@@ -31,7 +38,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the request data
         $validatedData = $request->validate([
             'username' => 'required|string|max:255|unique:users',
             'nickname' => 'required|string|max:255',
@@ -40,25 +46,13 @@ class UserController extends Controller
             'password' => 'required|string',
             'image' => 'nullable|image',
             'job' => "required",
-            'is_admin' => ['sometimes', 'boolean', function ($attribute, $value, $fail) {
-                if ($value === 'on' || $value === true) {
-                    request()->merge([$attribute => true]);
-                } else {
-                    request()->merge([$attribute => false]);
-                }
-            }],
+            'is_admin' => 'required'
         ]);
-
-        ddd($validatedData);
-
-
-
 
         if ($request->file('image')) {
             $request->file('image')->store('uploads', 'public');
         }
 
-        // Create the user
         User::create([
             'username' => $validatedData['username'],
             'nickname' => $validatedData['nickname'],
@@ -66,19 +60,11 @@ class UserController extends Controller
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
             'image' => $validatedData['image'] ?? null,
-            'is_admin' => $validatedData['is_admin'] ?? false,
-            'employee' => $validatedData['employee'] ?? false,
+            'is_admin' => $validatedData['is_admin'],
+            'job' => $validatedData['job'],
         ]);
 
         return redirect()->route('admin.user.index')->with('success', Str::ucfirst($request->username) . ' created successfully');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
     }
 
     /**
@@ -86,7 +72,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('admin.users.edit', ['data' => $user]);
     }
 
     /**
@@ -94,14 +80,47 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $validatedData = $request->validate([
+            'username' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z0-9_]+$/'],
+            'age' => ['required', 'integer', 'min:18'],
+            'job' => ['required', 'string', 'email', 'max:255'],
+            'nickname' => ['required', 'string', 'max:255'],
+            'email' => ['nullable', 'string', 'email', 'max:255'],
+            'password' => ['nullable', 'string', 'min:8'],
+            'image' => ['nullable', 'image', 'max:2048'],
+            'oldPass' => ['required_with:newPassword', 'string', 'min:8'],
+            'newPassword' => ['nullable', 'string', 'min:8', 'different:oldPass'],
+        ]);
+
+        if ($request->filled('newPassword')) {
+            $password = Hash::make($validatedData['newPassword']);
+        } else {
+            $password = $user->password;
+        }
+
+        $user->update([
+            'username' => $validatedData['username'],
+            'age' => $validatedData['age'],
+            'job' => $validatedData['job'],
+            'nickname' => $validatedData['nickname'],
+            'email' => $validatedData['email'],
+            'password' => $password,
+        ]);
+
+        return redirect()->route('admin.user.index')->with('primary', 'Akun berhasil diubah');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(User $user)
     {
-        //
+        if ($user->image) {
+            Storage::delete($user->image);
+        };
+
+        User::destroy($user->id);
+        return to_route('admin.user.index')->with('delete', 'Delete Menu Success');
     }
 }
