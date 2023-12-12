@@ -49,6 +49,9 @@
                 <x-admin-nav-link :href="route('admin.weapon.index')" :active="request()->routeIs('admin.weapon**')">
                     {{ __('Weapon') }}
                 </x-admin-nav-link>
+                <x-admin-nav-link :href="route('admin.pengajuan.index')" :active="request()->routeIs('admin.pengajuan**')">
+                    {{ __('Peminjaman') }}
+                </x-admin-nav-link>
 
                 <div @click.away="open = false" class="relative" x-data="{ open: false }">
                     <button @click="open = !open"

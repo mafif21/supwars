@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Peminjaman extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'weapon_id', 'tanggal_peminjaman', 'tanggal_dikembalikan'];
+    protected $fillable = ['user_id', 'weapon_id', 'tanggal_peminjaman', 'tanggal_dikembalikan', 'total_price'];
 
     public function users(): BelongsTo
     {

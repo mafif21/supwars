@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('weapon_id')->constrained()->onDelete('restrict');
             $table->date('tanggal_peminjaman');
             $table->date('tanggal_dikembalikan')->nullable();
+            $table->integer('total_price')->nullable();
             $table->timestamps();
         });
     }
