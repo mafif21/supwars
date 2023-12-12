@@ -18,7 +18,7 @@
 <body class="font-sans antialiased">
     <div class="flex-col w-full md:flex md:flex-row md:min-h-screen">
         <div @click.away="open = false"
-            class="flex flex-col flex-shrink-0 w-full text-gray-700 bg-slate-50 md:w-64 lg:py-8"
+            class="flex flex-col flex-shrink-0 w-full text-gray-700 bg-slate-100 md:w-64 lg:py-8"
             x-data="{ open: false }">
             <div class="flex flex-row items-center justify-between flex-shrink-0 px-8 py-4">
                 <a href="/admin"
@@ -37,10 +37,10 @@
             </div>
             <nav :class="{ 'block': open, 'hidden': !open }"
                 class="flex-grow px-4 pb-4 md:block md:pb-0 md:overflow-y-auto">
-                <x-admin-nav-link :href="route('admin.index')" :active="request()->routeIs('admin')">
+                <x-admin-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index**')">
                     {{ __('Dashboard') }}
                 </x-admin-nav-link>
-                <x-admin-nav-link :href="route('admin.index')" :active="request()->routeIs('admin')">
+                <x-admin-nav-link :href="route('admin.user.index')" :active="request()->routeIs('admin.user**')">
                     {{ __('Users') }}
                 </x-admin-nav-link>
                 <x-admin-nav-link :href="route('admin.index')" :active="request()->routeIs('admin')">
