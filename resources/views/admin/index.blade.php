@@ -4,7 +4,7 @@
     <div class="grid xl:grid-cols-1 lg:gap-x-10">
         <div class="grid gap-3 mb-8 md:grid-cols-2 xl:grid-cols-2 xl:h-full">
             <!-- Card -->
-            <div class="flex items-center p-4 bg-white rounded-lg shadow-xs bg-slate-100">
+            <div class="flex items-center p-4 bg-white rounded-lg shadow-md bg-slate-100">
                 <div class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path
@@ -16,13 +16,13 @@
                     <p class="mb-2 text-sm font-medium text-darker-black">
                         Users
                     </p>
-                    <p class="text-lg font-semibold text-darker-black ">
-                        10
+                    <p class="text-lg font-semibold text-darker-black">
+                        {{ $users->where('is_admin', 0)->count() }}
                     </p>
                 </div>
             </div>
             <!-- Card -->
-            <div class="flex items-center p-4 bg-white rounded-lg shadow-xs bg-slate-100">
+            <div class="flex items-center p-4 bg-white rounded-lg shadow-md bg-slate-100">
                 <div class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path
@@ -35,13 +35,13 @@
                         Admin
                     </p>
                     <p class="text-lg font-semibold text-darker-black">
-                        1
+                        {{ $users->where('is_admin', 1)->count() }}
                     </p>
                 </div>
             </div>
 
             <!-- Card -->
-            <div class="flex items-center p-4 bg-white rounded-lg shadow-xs bg-slate-100">
+            <div class="flex items-center p-4 bg-white rounded-lg shadow-md bg-slate-100">
                 <div class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full ">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path
@@ -54,11 +54,11 @@
                         Weapons
                     </p>
                     <p class="text-lg font-semibold text-darker-black ">
-                        90
+                        {{ count($weapons) }}
                     </p>
                 </div>
             </div>
-            <div class="flex items-center p-4 bg-white rounded-lg shadow-xs bg-slate-100">
+            <div class="flex items-center p-4 bg-white rounded-lg shadow-md bg-slate-100">
                 <div class="p-3 mr-4 text-green-500 bg-green-100 rounded-full ">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
@@ -68,13 +68,46 @@
                 </div>
                 <div>
                     <p class="mb-2 text-sm font-medium text-darker-black">
-                        Category
+                        Peminjaman
                     </p>
                     <p class="text-lg font-semibold text-darker-black ">
-                        89
+                        {{ count($peminjaman) }}
                     </p>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="w-full overflow-hidden rounded-lg lg:mt-10 my-26 border-line-stroke ">
+        <div class="bg-white w-full py-3 lg:py-4 xl:text-lg">
+            <h1 class="font-semibold text-darker-black">History Peminjaman Senjata</h1>
+        </div>
+
+        <div class="w-full overflow-x-auto">
+            <table class="w-full whitespace-no-wrap">
+                <thead>
+                    <tr
+                        class="text-xs lg:text-sm font-semibold tracking-wide text-left text-dark-grey uppercase border-b bg-gray-100 lg:text-center">
+                        <th class="px-4 py-3">Name</th>
+                        <th class="px-4 py-3">Weapon</th>
+                        <th class="px-4 py-3">Tanggal Peminjaman</th>
+                        <th class="px-4 py-3">Tanggal Dikembalikan</th>
+                        <th class="px-4 py-3">Total Harga</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y">
+                    @foreach ($history as $data)
+                        <tr class="text-darker-black lg:text-center text-xs lg:text-sm">
+                            <td class="px-4 py-3 text-xs lg:text-sm">{{ $data->users->username }}</td>
+                            <td class="px-4 py-3 text-xs lg:text-sm">{{ $data->weapons->name }}</td>
+                            <td class="px-4 py-3 text-xs lg:text-sm">{{ $data->tanggal_peminjaman }}</td>
+                            <td class="px-4 py-3 text-xs lg:text-sm">{{ $data->tanggal_dikembalikan }}</td>
+                            <td class="px-4 py-3 text-xs lg:text-sm">Rp.{{ $data->total_price }}</td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 
