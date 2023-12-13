@@ -1,8 +1,11 @@
 <x-app-layout>
     <x-slot name="title">Pengajuan</x-slot>
 
+    @if (session()->has('danger'))
+        <x-danger-alert statusText="{{ session()->get('danger') }}"></x-danger-alert>
+    @endif
     <div class="grid lg:grid-cols-[3fr_1fr] text-darker-black gap-x-4">
-        <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-2 h-fit ">
+        <div class="grid grid-cols-3 gap-2 h-fit ">
             @foreach ($weapons as $weapon)
                 <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow card" id="target">
                     <div class="relative">
@@ -38,13 +41,15 @@
                                     Tersedia</span>
                             @endif
                         </div>
-                        @if ($weapon->available == 1)
-                            <button data-modal-target="peminjaman-{{ $weapon->id }}"
-                                data-modal-toggle="peminjaman-{{ $weapon->id }}" data-aset="{{ $weapon->id }}"
-                                class="pinjamBtn block text-white mt-6 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center w-full"
-                                type="button">
-                                Pinjam
-                            </button>
+                        @if (auth()->user()->is_admin !== 1)
+                            @if ($weapon->available == 1)
+                                <button data-modal-target="peminjaman-{{ $weapon->id }}"
+                                    data-modal-toggle="peminjaman-{{ $weapon->id }}" data-aset="{{ $weapon->id }}"
+                                    class="pinjamBtn block text-white mt-6 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center w-full"
+                                    type="button">
+                                    Pinjam
+                                </button>
+                            @endif
                         @endif
 
                         <div id="peminjaman-{{ $weapon->id }}" tabindex="-1" aria-hidden="true"

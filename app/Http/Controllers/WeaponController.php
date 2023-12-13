@@ -13,9 +13,14 @@ class WeaponController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $weapons = Weapon::paginate(10);
+        if ($request->input('query')) {
+            $query = $request->input('query');
+            $weapons = Weapon::where('name', 'LIKE', "%$query%")->paginate(10);
+        } else {
+            $weapons = Weapon::paginate(10);
+        }
         return view('admin.weapon.index', compact('weapons'));
     }
 

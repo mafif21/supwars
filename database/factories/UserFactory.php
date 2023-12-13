@@ -24,12 +24,12 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'username' => 'mafif21',
-            'email' => 'muhammadafifjpr@gmail.com',
-            'age' => 21,
-            'nickname' => "afif",
-            'job' => 'TNI',
-            'is_admin' => true,
+            'username' => $this->faker->userName,
+            'email' => $this->faker->unique()->safeEmail,
+            'age' => $this->faker->numberBetween(18, 65),
+            'nickname' => $this->faker->firstName,
+            'job' => $this->faker->jobTitle,
+            'is_admin' => false,
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
