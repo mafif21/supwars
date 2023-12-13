@@ -182,7 +182,7 @@
                             placeholder="Cari aset..." required>
                     </div>
                     <div class="rounded-b-md pb-3 px-4 bg-white">
-                        <form action="{{ route('dashboard') }}" method="GET">
+                        {{-- <form action="{{ route('dashboard') }}" method="GET">
                             @csrf
                             <div class="border-b py-4">
                                 <h4 class="font-semibold text-xs mb-2.5">Status</h4>
@@ -224,7 +224,7 @@
 
                             <button type="submit"
                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded text-xs px-5 w-full py-2 my-3 font-semibold">Cari</button>
-                        </form>
+                        </form> --}}
                     </div>
                 </div>
             </div>
