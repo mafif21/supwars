@@ -73,7 +73,7 @@ class WeaponController extends Controller
     public function update(Request $request, Weapon $weapon)
     {
         $request->validate([
-            'kode' => 'required',
+            'kode' => 'required|unique:weapons,kode,' . $weapon->id,
             'name' => 'required',
             'price' => 'required',
             'description' => 'required',
