@@ -21,3 +21,7 @@ A cutting-edge application revolutionizing military weapon management. SupWar st
 ## Database
 
 ![Database Design](./public/images/database.png)
+
+## Screen Record
+
+https://drive.google.com/file/d/1CdNxC8XaWD3JvDlON8YIHEWyh42IEp8-/view?usp=sharing
