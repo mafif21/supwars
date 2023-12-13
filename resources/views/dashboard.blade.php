@@ -181,51 +181,7 @@
                             class="block w-full p-2 pl-10 text-sm  border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Cari aset..." required>
                     </div>
-                    <div class="rounded-b-md pb-3 px-4 bg-white">
-                        {{-- <form action="{{ route('dashboard') }}" method="GET">
-                            @csrf
-                            <div class="border-b py-4">
-                                <h4 class="font-semibold text-xs mb-2.5">Status</h4>
 
-                                <div class="flex flex-col gap-y-3">
-                                    <div class="flex items-center">
-                                        <input id="default-radio-1" type="radio" value="1"
-                                            name="availability"
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                        <label for="default-radio-1"
-                                            class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300">Tersedia</label>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <input id="default-radio-2" type="radio" value="0"
-                                            name="availability"
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                        <label for="default-radio-2"
-                                            class="ms-2 text-xs font-medium text-gray-900 dark:text-gray-300">Tidak
-                                            Tersedia</label>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="border-b py-4">
-                                <h4 class="font-semibold text-xs mb-2.5">Kategori</h4>
-
-                                <div class="flex flex-col gap-y-3">
-                                    @foreach ($categories as $category)
-                                        <div class="flex items-center">
-                                            <input id="default-checkbox" type="checkbox" value=""
-                                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded"
-                                                name="kategoriquery">
-                                            <label for="default-checkbox"
-                                                class="ml-2 text-xs font-medium">{{ $category->name }}</label>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-
-                            <button type="submit"
-                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded text-xs px-5 w-full py-2 my-3 font-semibold">Cari</button>
-                        </form> --}}
-                    </div>
                 </div>
             </div>
 
