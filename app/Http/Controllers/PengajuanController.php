@@ -34,8 +34,13 @@ class PengajuanController extends Controller
             $denda = 50000;
 
             // Calculate the duration in days
-            $durasi = \Carbon\Carbon::parse($peminjaman->tanggal_peminjaman)->diffInDays(now()) + 1;
-            // dd($durasi);
+            if ($peminjaman->tanggal_peminjaman == now()->format('Y-m-d')) {
+                $durasi = \Carbon\Carbon::parse($peminjaman->tanggal_peminjaman)->diffInDays(now()) + 1;
+            } else {
+                $durasi = \Carbon\Carbon::parse($peminjaman->tanggal_peminjaman)->diffInDays(now());
+            }
+            // dummy jika ingin melakukan pengetesan denda
+            // $durasi = \Carbon\Carbon::parse($peminjaman->tanggal_peminjaman)->diffInDays(now()->addDays(5));
 
             if ($durasi > 5) {
                 $totalPrice = ($pricePerDay * $durasi) + $denda;

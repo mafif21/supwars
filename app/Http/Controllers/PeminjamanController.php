@@ -46,6 +46,7 @@ class PeminjamanController extends Controller
 
             // Periksa apakah pengguna sudah meminjam 2 senjata
             $userWeaponCount = Peminjaman::where('user_id', auth()->user()->id)
+                ->whereNull('tanggal_dikembalikan')
                 ->count();
 
             if ($userWeaponCount >= 2) {
