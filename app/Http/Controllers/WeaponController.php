@@ -75,6 +75,7 @@ class WeaponController extends Controller
         $request->validate([
             'kode' => 'required|unique:weapons,kode,' . $weapon->id,
             'name' => 'required',
+            'available' => 'required',
             'price' => 'required',
             'description' => 'required',
             'image' => 'image|mimes:jpg,jpeg,png,svg',
@@ -90,6 +91,7 @@ class WeaponController extends Controller
             "kode" => $request->kode,
             "name" => $request->name,
             "price" => $request->price,
+            "available" => $request->available,
             "description" => $request->description,
             "image" => $image,
         ]);
