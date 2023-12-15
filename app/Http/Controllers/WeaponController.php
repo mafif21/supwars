@@ -84,7 +84,7 @@ class WeaponController extends Controller
         $image = $weapon->image;
         if ($request->hasFile('image')) {
             Storage::delete($weapon->image);
-            $image = $request->file('image')->store('menus');
+            $image = $request->file('image')->store('uploads', 'public');
         }
 
         $weapon->update([
@@ -107,8 +107,18 @@ class WeaponController extends Controller
      */
     public function destroy(Weapon $weapon)
     {
-        $weapon->categories()->detach();
-        $weapon->delete();
-        return redirect()->route('admin.weapon.index')->with('success', 'Weapon deleted successfully');
+        try {
+            $weapon->categories()->detach();
+            $weapon->delete();
+            return redirect()->route('admin.weapon.index')->with('success', 'Weapon deleted successfully');
+        } catch (\Illuminate\Database\QueryException $e) {
+            $errorCode = $e->errorInfo[1];
+
+            if ($errorCode == 1451) {
+                return redirect()->route('admin.weapon.index')->with('delete', 'Senjata ' . $weapon->name . ' masih dibutuhkan');
+            } else {
+                return redirect()->route('admin.weapon.index')->with('delete', 'Senjata tidak ditemukan');
+            }
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use PhpParser\Node\Stmt\TryCatch;
 
 class CategoryController extends Controller
 {
@@ -59,8 +60,18 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
-        Category::destroy($category->id);
-        return to_route('admin.categories.index')->with('delete', 'Delete Category Success');
+        try {
+            Category::destroy($category->id);
+            return to_route('admin.categories.index')->with('delete', 'Delete Category Success');
+        } catch (\Illuminate\Database\QueryException $e) {
+            $errorCode = $e->errorInfo[1];
+
+            if ($errorCode == 1451) {
+                return redirect()->route('admin.categories.index')->with('delete', 'Kategori ' . $category->name . ' masih dibutuhkan');
+            } else {
+                return redirect()->route('admin.categories.index')->with('delete', 'Kategori tidak ditemukan');
+            }
+        }
     }
 
     public function checkSlug(Request $request)

@@ -68,7 +68,11 @@ class PengajuanController extends Controller
     public function destroy($id)
     {
         $peminjaman = Peminjaman::findOrFail($id);
-        Peminjaman::destroy($peminjaman->id);
-        return to_route('admin.pengajuan.index')->with('delete', 'Delete Category Success');
+        if ($peminjaman->tanggal_dikembalikan !== null) {
+            Peminjaman::destroy($peminjaman->id);
+            return to_route('admin.pengajuan.index')->with('delete', 'Delete Category Success');
+        }
+
+        return to_route('admin.pengajuan.index')->with('delete', 'Pengembalian belum dilakukan');
     }
 }
