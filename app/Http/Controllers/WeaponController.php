@@ -88,9 +88,14 @@ class WeaponController extends Controller
         ]);
 
         $image = $weapon->image;
+        $video = $weapon->video;
         if ($request->hasFile('image')) {
             Storage::delete($weapon->image);
             $image = $request->file('image')->store('uploads', 'public');
+        }
+        if ($request->hasFile('video')) {
+            Storage::delete($weapon->video);
+            $video = $request->file('video')->store('uploads', 'public');
         }
 
         $weapon->update([
@@ -100,6 +105,7 @@ class WeaponController extends Controller
             "available" => $request->available,
             "description" => $request->description,
             "image" => $image,
+            "video" => $video
         ]);
 
         $categories = $request->input('category');
@@ -114,6 +120,13 @@ class WeaponController extends Controller
     public function destroy(Weapon $weapon)
     {
         try {
+            if (Storage::disk('public')->exists($weapon->image)) {
+                Storage::disk('public')->delete($weapon->image);
+            }
+
+            if (Storage::disk('public')->exists($weapon->video)) {
+                Storage::disk('public')->delete($weapon->video);
+            }
             $weapon->categories()->detach();
             $weapon->delete();
             return redirect()->route('admin.weapon.index')->with('success', 'Weapon deleted successfully');

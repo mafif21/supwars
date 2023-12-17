@@ -11,7 +11,7 @@
                     <div class="relative">
                         <div>
                             <a href="#">
-                                @if ($weapon->video !== null)
+                                @if ($weapon->video != '')
                                     <video class="rounded-t-lg h-52 w-full object-cover" controls>
                                         <source src="{{ asset('storage/' . $weapon->video) }}" type="video/mp4">
                                         Your browser does not support the video tag.
