@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Weapon extends Model
 {
     use HasFactory;
-    protected $fillable = ['kode', 'name', 'image', 'description', 'available', 'price'];
+    protected $fillable = ['kode', 'name', 'image', 'description', 'available', 'price', 'video'];
 
     public function categories(): BelongsToMany
     {

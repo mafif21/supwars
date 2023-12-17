@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('price');
             $table->boolean('available')->default(true);
             $table->string('image');
+            $table->string('video');
             $table->string('description');
             $table->timestamps();
         });

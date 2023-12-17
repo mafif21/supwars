@@ -46,8 +46,14 @@ class WeaponController extends Controller
             "description" => $request->description,
         ];
 
+        // dd($request->file('video'));
+
         if ($request->file('image')) {
             $data['image'] = $request->file('image')->store('uploads', 'public');
+        }
+
+        if ($request->file('video')) {
+            $data['video'] = $request->file('video')->store('uploads', 'public');
         }
 
         $weapon = Weapon::create($data);

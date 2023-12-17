@@ -26,6 +26,7 @@ class WeaponStoreRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'price' => ['required', 'integer'],
             'image' => ['image', 'mimes:jpg,jpeg,png,svg'],
+            'video' => ['file', 'mimetypes:video/mp4,video/mpeg,video/quicktime'],
             'description' => ['required', 'string', 'max:255'],
         ];
     }
