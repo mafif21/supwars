@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Peminjaman;
 use App\Models\Weapon;
 use Illuminate\Http\Request;
+use PDF;
 
 class PengajuanController extends Controller
 {
@@ -68,11 +69,20 @@ class PengajuanController extends Controller
     public function destroy($id)
     {
         $peminjaman = Peminjaman::findOrFail($id);
+        dd($peminjaman);
         if ($peminjaman->tanggal_dikembalikan !== null) {
             Peminjaman::destroy($peminjaman->id);
             return to_route('admin.pengajuan.index')->with('delete', 'Delete Category Success');
         }
 
         return to_route('admin.pengajuan.index')->with('delete', 'Pengembalian belum dilakukan');
+    }
+
+    public function export($id)
+    {
+        $peminjaman = Peminjaman::findOrFail($id);
+        // dd($peminjaman);
+        $pdf = PDF::loadView('riwayat-peminjaman', compact('peminjaman'));
+        return $pdf->stream();
     }
 }

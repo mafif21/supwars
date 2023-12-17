@@ -8,6 +8,10 @@ Alpine.start();
 
 const search = document.querySelector("#menu-search");
 const cards = document.querySelectorAll(".card");
+const btn = document.querySelector(".test");
+btn.addEventListener("click", () => {
+    console.log("hello");
+});
 
 search.addEventListener("input", function () {
     const userInput = search.value;

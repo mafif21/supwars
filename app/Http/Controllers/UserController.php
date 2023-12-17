@@ -113,6 +113,6 @@ class UserController extends Controller
         };
 
         User::destroy($user->id);
-        return to_route('admin.user.index')->with('delete', 'Delete Menu Success');
+        return to_route('admin.user.index')->with('delete', 'Delete User Success');
     }
 }

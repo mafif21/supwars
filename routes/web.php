@@ -33,6 +33,7 @@ Route::middleware('admin')->name('admin.')->prefix('admin')->group(function () {
     Route::resource('/categories', CategoryController::class);
     Route::resource('/weapon', WeaponController::class);
     Route::resource('/pengajuan', PengajuanController::class);
+    Route::get('/cetakpengajuan/{id}', [PengajuanController::class, 'export'])->name('export');
 });
 
 require __DIR__ . '/auth.php';

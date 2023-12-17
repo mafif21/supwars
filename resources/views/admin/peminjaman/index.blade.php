@@ -91,6 +91,10 @@
                                     @method('DELETE')
                                     <button type="submit" class="font-medium text-red-600">Delete</button>
                                 </form>
+                                @if ($data->tanggal_dikembalikan)
+                                    <a class="font-medium text-orange-600"
+                                        href="{{ route('admin.export', $data->id) }}">Cetak</a>
+                                @endif
                             </div>
                         </td>
                     </tr>

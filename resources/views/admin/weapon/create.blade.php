@@ -3,7 +3,7 @@
 
     <div class="bg-white p-8 mb-5 rounded w-1/2 text-darker-black">
         <h1 class="font-semibold mb-5">Add New Weapon</h1>
-        <form action="{{ route('admin.weapon.store') }}" method="POST" class="flex flex-col gap-4"
+        <form action="{{ route('admin.weapon.store') }}" method="POST" class="flex flex-col gap-4" id="weaponForm"
             enctype="multipart/form-data">
             @csrf
             <div>
@@ -20,7 +20,7 @@
             </div>
             <div>
                 <label for="price" class="block mb-2 text-sm font-semibold">Harga *</label>
-                <input type="number" id="price" class="border border-line-stroke text-sm rounded block w-full p-2"
+                <input type="text" id="price" class="border border-line-stroke text-sm rounded block w-full p-2"
                     placeholder="Weapon price" name="price" value="{{ old('price') }}">
                 <x-input-error :messages="$errors->get('price')" class="mt-2" />
             </div>
@@ -49,10 +49,11 @@
                     id="file_input" type="file" name="image">
             </div>
             <div>
-                <label for="name" class="block mb-2 text-sm font-semibold">Decsription *</label>
+                <label for="message" class="block mb-2 text-sm font-semibold">Decsription *</label>
                 <textarea id="message" rows="4"
                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Write your thoughts here..." name="description">{{ old('description') }}</textarea>
+                <div id="error-kode" class="text-red-600"></div>
                 <x-input-error :messages="$errors->get('description')" class="mt-2" />
             </div>
             <button type="submit"
@@ -61,4 +62,57 @@
                 Weapon</button>
         </form>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.getElementById('weaponForm');
+            form.addEventListener('submit', function(e) {
+                let isValid = true;
+                let errorMessage = '';
+
+                const kode = document.getElementById('kode');
+                if (!kode.value.trim()) {
+                    errorMessage += 'Kode senjata harus diisi.\n';
+                    isValid = false;
+                }
+
+                const name = document.getElementById('name');
+                if (!name.value.trim()) {
+                    errorMessage += 'Nama senjata harus diisi.\n';
+                    isValid = false;
+                }
+
+                const desc = document.getElementById('message');
+                if (!desc.value.trim()) {
+                    errorMessage += 'Deskripsi senjata harus diisi.\n';
+                    isValid = false;
+                }
+
+                // Cek Harga
+                const price = document.getElementById('price');
+                if (!price.value.trim() || isNaN(price.value)) {
+                    errorMessage += 'Harga harus diisi dan berupa angka.\n';
+                    isValid = false;
+                }
+
+                // Cek Gambar
+                const image = document.getElementById('file_input');
+                if (!image.value) {
+                    errorMessage += 'Gambar harus diunggah.\n';
+                    isValid = false;
+                }
+
+                // Tampilkan pesan error jika validasi gagal
+                if (!isValid) {
+                    e.preventDefault();
+                    alert(errorMessage);
+                }
+            });
+        });
+    </script>
+
+
+
+
+
 </x-admin-layout>
